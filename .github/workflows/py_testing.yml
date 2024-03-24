@@ -10,6 +10,10 @@ on:
 
 permissions:
   contents: read
+  
+env:
+  shards : ${{ secrets.SHARDS }}
+  token : ${{ secrets.TOKEN }}
 
 jobs:
   deploy:
