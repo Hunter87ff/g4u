@@ -13,6 +13,8 @@ env:
   shards : ${{ secrets.SHARDS }}
   token : ${{ secrets.TOKEN }}
   prefix : ${{ secrets.PREFIX }}
+  spot_id : ${{ secrets.SPOT_ID }}
+  spot_secret : ${{ secrets.SPOT_SECRET }}
   
   
 jobs:
