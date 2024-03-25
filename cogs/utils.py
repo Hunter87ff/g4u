@@ -5,6 +5,8 @@ from discord.ext import commands
 from python_aternos import Client
 from discord.ui import Button, View
 from discord import app_commands, Interaction
+atclient = Client()
+atclient.login(config.mc_user, config.mc_pass)
 cmd = commands
 blurple = 0x7289da
 greyple = 0x99aab5
@@ -45,16 +47,14 @@ class Utility(commands.Cog):
         G4U_dream=3
         G4U_Horizon=4
         
-    @app_commands.command()
-    async def mcstart(self, interaction:Interaction, _server:Mc_server):
-        atclient = Client()
-        atclient.login(config.mc_user, config.mc_pass)
+    @cmd.command()
+    async def mcstart(self, ctx, _server:int):
         servs = atclient.account.list_servers()
         try:
-            servs[_server.value].start()
-            await interaction.response.send_message(embed=discord.Embed(description="**Server starting! wait few min and refresh...**", color=config.blurple))
+            servs[_server].start()
+            await ctx.send(embed=discord.Embed(description="**Server starting! wait few min and refresh...**", color=config.blurple))
         except:
-            await interaction.response.send_message(embed=discord.Embed(description="**Server Starting/Started or Unavailable...**", color=config.blurple))
+            await ctx.send(embed=discord.Embed(description="**Server Starting/Started or Unavailable...**", color=config.blurple))
 
 
     @cmd.hybrid_command(with_app_command=True, aliases=['av', 'pfp'])

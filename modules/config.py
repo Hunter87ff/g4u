@@ -10,7 +10,6 @@ owner_tag = "hunter#6967"
 
 bot_id = 1041948897003704321
 token = os.environ["token"]
-
 support_server = "https://discord.gg/vMnhpAyFZm"
 support_server_id = 947443790053015623
 prefix = ","

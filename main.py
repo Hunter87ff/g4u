@@ -16,7 +16,7 @@ intents.reactions = True
 intents.members = True
 intents.voice_states = True
 intents.guilds = True
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(config.prefix),
+bot = commands.AutoShardedBot(shard_count=2, command_prefix=commands.when_mentioned_or(config.prefix),
                    intents=intents)
 #allowed_mentions = discord.AllowedMentions(roles=True, users=True, everyone=True),
 bot.remove_command("help")
@@ -39,10 +39,12 @@ async def reconnect():
 
 @bot.event
 async def setup_hook():
-	await bot.tree.sync()
+	pass
+	#await bot.tree.sync()
 	
 @bot.event
 async def on_ready():
+	await bot.tree.sync()
 	await load_extensions()
 	st_log = bot.get_channel(config.stl)
 	stmsg = f'{bot.user} is ready with {len(bot.commands)} commands'
