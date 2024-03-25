@@ -6,7 +6,7 @@ from python_aternos import Client
 from discord.ui import Button, View
 from discord import app_commands, Interaction
 atclient = Client()
-atclient.login(config.mc_user, config.mc_pass)
+
 cmd = commands
 blurple = 0x7289da
 greyple = 0x99aab5
@@ -49,6 +49,7 @@ class Utility(commands.Cog):
         
     @cmd.command()
     async def mcstart(self, ctx, _server:int):
+        atclient.login(config.mc_user, config.mc_pass)
         servs = atclient.account.list_servers()
         try:
             servs[_server].start()
