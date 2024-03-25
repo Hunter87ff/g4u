@@ -1,8 +1,6 @@
 python-dotenv
 flask
 psutil
-pymongo==4.2.0
-pymongo[srv]
 discord.py==2.3.0
 requests==2.31.0
 PyNaCl
@@ -12,3 +10,4 @@ html5lib
 humanfriendly==10.0
 gtts==2.3.2
 numpy==1.24.1
+python-aternos
