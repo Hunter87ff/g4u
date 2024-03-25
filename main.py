@@ -1,24 +1,13 @@
 import os
-import json
-import time
 import random
-import typing
-import pymongo
-import modules
 import discord
-import asyncio
-import datetime
-import requests
 import wavelink
-import gtts
-from gtts import gTTS
 from asyncio import sleep
-from pymongo import MongoClient
+from flask import Flask, render_template
+from threading import Thread
 from wavelink.ext import spotify
 from discord.ext import commands
-from discord.ui import Button, View
-from datetime import datetime, timedelta
-from modules import (config, color, reply)
+from modules import (config,reply)
 #from discord.ext.commands.converter import (MemberConverter, RoleConverter, TextChannelConverter)
 
 intents = discord.Intents.default()
@@ -27,11 +16,6 @@ intents.reactions = True
 intents.members = True
 intents.voice_states = True
 intents.guilds = True
-
-#kill "python.exe"
-
-#Configuring db
-
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(config.prefix),
                    intents=intents)
 #allowed_mentions = discord.AllowedMentions(roles=True, users=True, everyone=True),
@@ -46,25 +30,21 @@ async def load_extensions():
 
 
 async def reconnect():
-	try:
-		gld = bot.get_guild(config.ofc_guild)
-	except:
-		return
+	try:gld = bot.get_guild(config.ofc_guild)
+	except:return
 	for i in gld.voice_channels:
 		if i.id == config.voice_channel:
-			try:
-				return await i.connect(self_deaf=True, reconnect=True)
-			except:
-				return
-
+			try:return await i.connect(self_deaf=True, reconnect=True)
+			except:return
 
 @bot.event
+async def setup_hook():
+	await bot.tree.sync()
+	
+@bot.event
 async def on_ready():
-	await node_connect()
 	await load_extensions()
 	st_log = bot.get_channel(config.stl)
-	await bot.tree.sync()
-	await reconnect()
 	stmsg = f'{bot.user} is ready with {len(bot.commands)} commands'
 	await st_log.send("<@885193210455011369>",
 	                  embed=discord.Embed(title="Status",
@@ -74,18 +54,6 @@ async def on_ready():
 	await bot.change_presence(activity=discord.Activity(
 	 type=discord.ActivityType.listening, name="Gaming 4 You"))
 	await sleep(120)
-
-
-@bot.command()
-async def restart(ctx):
-	if ctx.author.id == config.owner_id:
-		try:
-			os.kill()
-			os.system("python main.py")
-		except:
-			pass
-	else:
-		return
 
 
 @bot.event
@@ -109,8 +77,7 @@ bws = ['asses', 'asshole', 'bc', 'behenchod', 'betichod', 'bhenchod', 'bhos', 'b
 
 @bot.event
 async def on_message(message):
-	if message.webhook_id != None:
-		return
+	if message.webhook_id:return
 	await bot.process_commands(message)
 	await reply.esp(message)
 	for i in message.content.split():
@@ -282,9 +249,9 @@ async def botinfo(ctx):
 	              value=gp(),
 	              inline=False)
 	emb.add_field(name="<:setting:968374105961300008> __Command Prefix__",
-	              value="prefix: & , command: &help",
+	              value=f"prefix: {config.prefix} , command: {config.prefix}help",
 	              inline=False)
-	emb.set_footer(text="Made with ❤️ | By hunter#6967")
+	emb.set_footer(text="Made with ❤️ | By hunter87ff#0")
 	return await ctx.send(embed=emb)
 
 
@@ -305,26 +272,13 @@ async def sdm(ctx, member: discord.User, *, message):
 		 color=0xff0000))
 
 
-from flask import Flask, render_template
-from threading import Thread
 
 app = Flask('')
-
-
 @app.route('/')
-def index():
-	return render_template('index.html')
-
-
-def run():
-	app.run(host='0.0.0.0', port=8080)
-
-
+def index():return render_template('index.html')
+def run():app.run(host='0.0.0.0', port=8080)
 def keep_alive():
 	t = Thread(target=run)
 	t.start()
-
-
 keep_alive()
-
 bot.run(config.token)

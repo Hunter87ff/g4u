@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 load_dotenv()
-
+env=os.environ
 
 
 version = "1.9.4"
@@ -18,6 +18,8 @@ m_host = "ssl.freelavalink.ga"
 m_host_psw = "www.freelavalink.ga"
 spot_id = os.environ["spot_id"]
 spot_secret = os.environ["spot_secret"]
+mc_user=env["mc_user"]
+mc_pass=env["mc_pass"]
 ofc_guild = 709060749326024774
 voice_channel = 1068934981587570688
 
