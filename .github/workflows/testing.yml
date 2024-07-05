@@ -24,9 +24,6 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
-  working-directory: ./src
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -37,6 +34,7 @@ jobs:
         python-version: 3.10.9 
 
     - name: Install dependencies
+      working-directory: ./src
       run: |
         python -m pip install --upgrade pip
         pip install -r dep.txt
@@ -54,6 +52,7 @@ jobs:
 
     - name: Deployment
       run: |
+        working-directory: ./src
         python main.py 
 
 
