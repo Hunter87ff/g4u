@@ -24,6 +24,8 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
+  working-directory: ./src
 
     steps:
     - name: Checkout code
@@ -40,7 +42,7 @@ jobs:
         pip install -r dep.txt
         # sudo apt-get update && sudo apt-get install -y default-jdk
 
-      working-directory: ./src
+      
         
     - name: Install ffmpeg
       run: 
