@@ -33,8 +33,7 @@ async def reconnect():
 
 @bot.event
 async def setup_hook():
-	pass
-	#await bot.tree.sync()
+	await bot.tree.sync()
 	
 @bot.event
 async def on_ready():

@@ -52,6 +52,7 @@ jobs:
 
     - name: Deployment
       run: |
+        cd src
         python main.py 
 
 
