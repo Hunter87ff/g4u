@@ -214,7 +214,8 @@ async def on_command_error(ctx, error):
 #                                       INFO
 ############################################################################################
 @bot.command()
-async def pl(ctx, url2):
+async def pl(ctx:commands.Context, url2):
+    if not ctx.voice_client:ctx.voice_client = await ctx.author.voice.channel.connect()
     ctx.voice_client.stop()
     FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
     source = await discord.FFmpegOpusAudio.from_probe(url2)
@@ -232,7 +233,7 @@ def gp():
 @commands.cooldown(2, 20, commands.BucketType.user)
 @commands.bot_has_permissions(send_messages=True)
 async def ping(ctx):
-	await ctx.reply(f'**Current ping is `{gp()} ms`**')
+	await ctx.reply(f'**Current ping is `{round(bot.latency*1000)} ms`**')
 
 
 @bot.hybrid_command(with_app_command=True, aliases=["bi", "about", "info"])
@@ -245,13 +246,13 @@ async def botinfo(ctx):
 	                    color=discord.Color.blurple())
 	emb.add_field(
 	 name="<:dev:1020696239689433139> __Developer__",
-	 value="[Hunter#6967](https://discord.com/users/885193210455011369)",
+	 value="[hunter87ff](https://discord.com/users/885193210455011369)",
 	 inline=False)
 	emb.add_field(name="<:g_latency:968371843335610408> __Current Ping__",
 	              value=gp(),
 	              inline=False)
 	emb.add_field(name="<:setting:968374105961300008> __Command Prefix__",
-	              value=f"prefix: {config.prefix} , command: {config.prefix}help",
+	              value=f"`prefix: {config.prefix}` | `command: {config.prefix}help`",
 	              inline=False)
 	emb.set_footer(text="Made with ❤️ | By hunter87ff#0")
 	return await ctx.send(embed=emb)
@@ -262,16 +263,9 @@ async def botinfo(ctx):
 @commands.cooldown(2, 20, commands.BucketType.user)
 async def sdm(ctx, member: discord.User, *, message):
 	if ctx.author.id == 885193210455011369:
-		try:
-			await member.send(message)
-			return await ctx.reply("Done")
-		except:
-			return
-
-	if ctx.author.id != 885193210455011369:
-		return await ctx.send(embed=discord.Embed(
-		 description="Command not found! please check the spelling carefully",
-		 color=0xff0000))
+		try:return member.send(message) and await ctx.reply("Done")
+		except:return
+	if ctx.author.id != 885193210455011369:return await ctx.send(embed=discord.Embed(description="Command not found! please check the spelling carefully",color=0xff0000))
 
 
 

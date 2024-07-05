@@ -72,7 +72,7 @@ class Music(commands.Cog):
 
 
 	@cmd.hybrid_command(with_app_command=True)
-	async def loop(self, ctx):
+	async def loop(self, ctx:commands.Context):
 		await ctx.defer()
 		if ctx.author.voice != None:
 			if ctx.voice_client != None:
@@ -96,7 +96,7 @@ class Music(commands.Cog):
 
 #, wavelink.SoundCloudTrack
 	@cmd.command(aliases= ['p','P'])
-	async def play(self, ctx, *, search: typing.Union[wavelink.YouTubeTrack, spotify.SpotifyTrack, wavelink.SoundCloudTrack, wavelink.YouTubeMusicTrack]):
+	async def play(self, ctx:commands.Context, *, search: typing.Union[wavelink.YouTubeTrack, spotify.SpotifyTrack, wavelink.SoundCloudTrack, wavelink.YouTubeMusicTrack]):
 		if ctx.author.bot:
 			return
 		next_btn = Button(emoji="<:Skip:1019218793597243462>", custom_id="next_btn")
@@ -332,21 +332,17 @@ class Music(commands.Cog):
 
 
 	@cmd.hybrid_command(with_app_command=True, aliases= ['connect'])
-	async def join(self, ctx):
+	async def join(self, ctx:commands.Context):
 		await ctx.defer()
-		if ctx.author.voice == None:
-			return await ctx.reply("Please Join VC")
-
+		if not ctx.author.voice:return await ctx.reply("Please Join VC")
 		if not ctx.voice_client:
 			try:
 				await ctx.author.voice.channel.connect(self_deaf=True, reconnect=True, cls = wavelink.Player)
-			except:
-				return await ctx.reply("Please Join VC")
+				await ctx.author.voice.channel.connect()
+			except:return await ctx.reply("Please Join VC")
 		if ctx.voice_client != None:
-		  try:
-		    await ctx.voice_client.move_to(ctx.author.voice.channel)
-		  except:
-		    return
+		  try:await ctx.voice_client.move_to(ctx.author.voice.channel)
+		  except:return
 
 
 
