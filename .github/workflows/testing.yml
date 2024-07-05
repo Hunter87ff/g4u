@@ -45,7 +45,6 @@ jobs:
     - name: Install ffmpeg
       run: 
         sudo apt-get update && sudo apt-get install -y ffmpeg
-      working-directory: ./
         
     # - name: Install ffmpeg
     #   run: 
