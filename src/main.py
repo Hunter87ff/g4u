@@ -8,7 +8,6 @@ from threading import Thread
 from wavelink.ext import spotify
 from discord.ext import commands
 from modules import (config,reply)
-#from discord.ext.commands.converter import (MemberConverter, RoleConverter, TextChannelConverter)
 
 intents = discord.Intents.default()
 intents.message_content = True
