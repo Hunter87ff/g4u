@@ -52,7 +52,6 @@ jobs:
 
     - name: Deployment
       run: |
-        working-directory: ./src
         python main.py 
 
 
