@@ -9,7 +9,7 @@ on:
       - main
     paths:
       - 'src/**'
-    
+
 permissions:
   contents: read
   
@@ -39,13 +39,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r dep.txt
         # sudo apt-get update && sudo apt-get install -y default-jdk
+
       working-directory: /src
         
     - name: Install ffmpeg
       run: 
         sudo apt-get update && sudo apt-get install -y ffmpeg
+      working-directory: ./
+        
+    # - name: Install ffmpeg
+    #   run: 
+    #     sudo apt-get update && sudo apt-get install -y ffmpeg
 
     - name: Deployment
       run: |
         python main.py 
- 
+
+

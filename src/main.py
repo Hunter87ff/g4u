@@ -21,13 +21,10 @@ bot = commands.AutoShardedBot(shard_count=2, command_prefix=commands.when_mentio
 #allowed_mentions = discord.AllowedMentions(roles=True, users=True, everyone=True),
 bot.remove_command("help")
 
-
 async def load_extensions():
 	for filename in os.listdir("./cogs"):
 		if filename.endswith(".py"):
 			await bot.load_extension(f"cogs.{filename[:-3]}")
-
-
 
 async def reconnect():
 	try:gld = bot.get_guild(config.ofc_guild)
