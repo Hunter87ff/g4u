@@ -15,9 +15,7 @@ intents.reactions = True
 intents.members = True
 intents.voice_states = True
 intents.guilds = True
-bot = commands.AutoShardedBot(shard_count=2, command_prefix=commands.when_mentioned_or(config.prefix),
-                   intents=intents)
-#allowed_mentions = discord.AllowedMentions(roles=True, users=True, everyone=True),
+bot = commands.AutoShardedBot(shard_count=2, command_prefix=commands.when_mentioned_or(config.prefix), intents=intents)
 bot.remove_command("help")
 
 async def load_extensions():
