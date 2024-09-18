@@ -203,9 +203,7 @@ async def on_command_error(ctx, error):
 		 delete_after=30)
 
 
-############################################################################################
-#                                       INFO
-############################################################################################
+
 @bot.command()
 async def pl(ctx:commands.Context, url2):
     if not ctx.voice_client:ctx.voice_client = await ctx.author.voice.channel.connect()
